@@ -1,12 +1,22 @@
-# Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
+# build target
 
-# Test binary, build with `go test -c`
-*.test
+client/build/
+server/build/
 
-# Output of the go coverage tool, specifically when used with LiteIDE
-*.out
+# tests
+test_scratch/
+*.log
+
+# Temporary / cached
+*.swp
+debug*
+.idea
+.vscode
+
+.gopath_bos
+vendor/*
+
+commit_hash.tx
+
+
+.DS_Store
