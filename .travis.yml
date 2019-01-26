@@ -1,6 +1,12 @@
 language: go
 go_import_path: github.com/pouladzade/cryptobank
-sudo: false
+
+language: cpp
+compiler:
+ - gcc
+ - clang
+ 
+sudo: true
 
 matrix:
   include:
