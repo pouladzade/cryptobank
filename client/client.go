@@ -10,13 +10,8 @@ import (
 	"zombiezen.com/go/capnproto2/rpc"
 )
 
-func NewRequest() *Request {
+func NewRequest(conf *config.Config) *Request {
 	ctx := context.Background()
-	conf, err := config.LoadFromFile(config.Config_File)
-	if err != nil {
-		fmt.Println(err)
-		conf = config.DefaultConfig()
-	}
 	conn, err := net.Dial(conf.RPC.Type, conf.RPC.Host+":"+conf.RPC.Port)
 	if err != nil {
 		fmt.Println(err)
