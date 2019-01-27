@@ -80,4 +80,5 @@ metalinter:
 .PHONY: build
 .PHONY: tools deps
 .PHONY: fmt metalinter
+.PHONY: all
 

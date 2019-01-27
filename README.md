@@ -5,6 +5,28 @@
 Online crypto-banking is a system that consist of a single bank that responsible for tracking accounts and performing 
 
 cryptocurrency related operations, and the clients which initiate some operations.(a sample of usage capnp proto in golang)
+## Compiling the code
+
+You need to install [Go](https://golang.org/) (version 1.10.1 or higher)
+<p>Then, <a href="https://capnproto.org/install.html" rel="nofollow">install the Cap'n Proto tools</a>.
+
+After installing them, you can follow these steps to compile and build the cryptobank project:
+
+```bash
+mkdir -p $GOPATH/src/github.com/cryptobank
+cd $GOPATH/src/github.com/cryptobank
+git clone https://github.com/pouladzade/cryptobank.git
+make
+```
+```
+Two executable file will be created:
+
+'bankclient' in this directory:
+"$GOPATH/src/github.com/cryptobank/client/build"
+
+ and 'bankserver' in this directory:
+ $GOPATH/src/github.com/cryptobank/server/build
+```
 
 This is the capn'p proto schema :
 ```js
