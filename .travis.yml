@@ -39,6 +39,6 @@ deploy:
   file: cryptobank-${TRAVIS_TAG}-${TRAVIS_OS_NAME}.zip
   skip_cleanup: true
   on:
-    tags: true
+    tags: false
     branch: master
 condition: ${TRAVIS_GO_VERSION} =~ ^1\.10
