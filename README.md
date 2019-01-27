@@ -28,5 +28,40 @@ interface CoreBanking {
 }
 
 ```
+## bankserver
+It's the server aplication which provides the services through capnp rpc.
+and will manages the accounts in form of json file.
+for starting server you need to provide a config.toml beside the server binaries,
+however if server can not find the config.toml it will create it by default configuration.
 
+## config.toml
+```js
+[rpc]
+  host = "127.0.0.1"
+  port = "1362"
+  type = "tcp"
+```
+
+Server will save and load accounts in a json file in the default director.
+./db/cryptodb.json
+```js
+{
+    "73757faa063959ecdacab1d845786f196a792811ea0d1e638ad0a1bd8b1df03b": {
+        "name": "Max",
+        "balance": 8888888
+    },
+    "94d4f25c19fcec53711fc77b839ebef299e8467dcfb73a7ab504de09912ebdfb": {
+        "name": "Alis",
+        "balance": 10000
+    },
+    "94e6d699fc57b3575e8e5a56ca18cf9632430a31d566705b4c3caa06134f58b0": {
+        "name": "Ahmad",
+        "balance": 99999999
+    },
+    "a863fead151f388b781d62beea26712e59dd3af0e2f478da260f3c4aa5ee8904": {
+        "name": "Bob",
+        "balance": 30000000
+    }
+}
+```  
 # Will be updated very soon....
