@@ -1,6 +1,6 @@
 language: go
 go_import_path: github.com/pouladzade/cryptobank
- 
+
 sudo: true
 
 matrix:
@@ -13,11 +13,11 @@ matrix:
     dist: trusty
     go: master
     script: make
-    
+
 before_install:
-  # C++17
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get update -qq
+# C++17
+- sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+- sudo apt-get update -qq
 
 install:
 - sudo apt-get install -qq g++-6
@@ -39,6 +39,10 @@ deploy:
   file: cryptobank-${TRAVIS_TAG}-${TRAVIS_OS_NAME}.zip
   skip_cleanup: true
   on:
-    tags: false
+    tags: true
     branch: master
 condition: ${TRAVIS_GO_VERSION} =~ ^1\.10
+
+
+
+
