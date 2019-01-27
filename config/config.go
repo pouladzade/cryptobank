@@ -92,7 +92,14 @@ func Mkdir(dir string) error {
 	return nil
 }
 
-func CreateDefaultConfig() error {
-	conf := DefaultConfig()
-	return conf.SaveToFile(Config_File)
+func LoadCreateConfig() *Config {
+	conf, err := LoadFromFile(Config_File)
+
+	// if there is no config file, Load the default config and create the default config file
+	if err != nil {
+		fmt.Println(err)
+		conf = DefaultConfig()
+		conf.SaveToFile(Config_File)
+	}
+	return conf
 }

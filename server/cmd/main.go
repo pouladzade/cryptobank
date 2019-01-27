@@ -5,24 +5,25 @@ import (
 	"github.com/cryptobank/config"
 	"github.com/cryptobank/cryptobank"
 	"github.com/cryptobank/server"
+	"github.com/cryptobank/server/cdb"
 	"net"
 	"os"
 	"zombiezen.com/go/capnproto2/rpc"
 )
 
 func main() {
-	conf, err := config.LoadFromFile(config.Config_File)
-	if err != nil {
-		fmt.Println(err)
-		conf = config.DefaultConfig()
-	}
 
+	conf := config.LoadCreateConfig()
 	l, err := net.Listen(conf.RPC.Type, conf.RPC.Host+":"+conf.RPC.Port)
 	if err != nil {
 		fmt.Println("Error listening:", err.Error())
 		os.Exit(1)
 	}
 	defer l.Close()
+	var db cdb.CryptoDb
+	db.LoadDb()
+	var service server.Service
+	service.SetDb(&db)
 
 	fmt.Println("Listening on " + conf.RPC.Host + ":" + conf.RPC.Port)
 	for {
@@ -31,17 +32,17 @@ func main() {
 			fmt.Println("Error accepting: ", err.Error())
 			os.Exit(1)
 		}
-		go serve(conn)
+		go serve(conn, &service)
 	}
+	db.Commit()
 }
 
-func serve(c net.Conn) {
-	main := cryptobank.CoreBanking_ServerToClient(server.Service{})
+func serve(c net.Conn, service *server.Service) {
+	main := cryptobank.CoreBanking_ServerToClient(service)
 	conn := rpc.NewConn(rpc.StreamTransport(c), rpc.MainInterface(main.Client))
 	fmt.Println("Waiting for request....")
 	err := conn.Wait()
 	if err != nil {
 		fmt.Println(err)
 	}
-
 }
