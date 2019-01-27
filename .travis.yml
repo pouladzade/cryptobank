@@ -12,28 +12,21 @@ matrix:
   include:
   - os: linux
     dist: trusty
-    env: COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5
-      addons:
-        apt:
-          packages:
-            - g++-5
-          sources: &sources
-            - llvm-toolchain-precise-3.8
-            - ubuntu-toolchain-r-test
     go: 1.10.x
     script: make capnp && make fmt && make build
   - os: linux
     dist: trusty
     go: master
-    script: make
-  - os: osx
-    go: 1.10.x
-    script: make
-  - os: osx
-    go: master
-    script: make
+    script: make capnp && make fmt && make build
     
+before_install:
+  # C++17
+  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+  - sudo apt-get update -qq
+
 install:
+- sudo apt-get install -qq g++-6
+- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 - curl -O https://capnproto.org/capnproto-c++-0.7.0.tar.gz
 - tar zxf capnproto-c++-0.7.0.tar.gz
 - cd capnproto-c++-0.7.0
