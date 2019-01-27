@@ -1,7 +1,7 @@
-# master [![Build Status](https://api.travis-ci.org/pouladzade/cryptobank.svg?branch=master)](https://travis-ci.org/pouladzade/cryptobank)
-# develop [![Build Status](https://api.travis-ci.org/pouladzade/cryptobank.svg?branch=develop)](https://travis-ci.org/pouladzade/cryptobank)
+## master  [![Build Status](https://api.travis-ci.org/pouladzade/cryptobank.svg?branch=master)](https://travis-ci.org/pouladzade/cryptobank)
+## develop [![Build Status](https://api.travis-ci.org/pouladzade/cryptobank.svg?branch=develop)](https://travis-ci.org/pouladzade/cryptobank)
 
-
+# Cryptobank
 Online crypto-banking is a system that consist of a single bank that responsible for tracking accounts and performing 
 
 cryptocurrency related operations, and the clients which initiate some operations.(a sample of usage capnp proto in golang)
