@@ -9,8 +9,8 @@ import (
 )
 
 type Request struct {
-	cb  crb.CoreBanking
-	ctx context.Context
+	cb   crb.CoreBanking
+	ctx  context.Context
 	conn *rpc.Conn
 }
 
@@ -70,6 +70,6 @@ func (r Request) logResult(res crb.Response) {
 	fmt.Printf("Response : Code = %d , Message = %s\n", res.Code(), message)
 }
 
-func (r Request) Close(){
+func (r Request) Close() {
 	r.conn.Close()
 }

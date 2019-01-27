@@ -92,7 +92,7 @@ func Mkdir(dir string) error {
 	return nil
 }
 
-func CreateDefaultConfig() error{
+func CreateDefaultConfig() error {
 	conf := DefaultConfig()
 	return conf.SaveToFile(Config_File)
 }

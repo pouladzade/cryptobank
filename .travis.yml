@@ -1,0 +1,44 @@
+language: go
+go_import_path: github.com/pouladzade/cryptobank
+ 
+sudo: true
+
+matrix:
+  include:
+  - os: linux
+    dist: trusty
+    go: 1.10.x
+    script: make
+  - os: linux
+    dist: trusty
+    go: master
+    script: make
+    
+before_install:
+  # C++17
+  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+  - sudo apt-get update -qq
+
+install:
+- sudo apt-get install -qq g++-6
+- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
+- curl -O https://capnproto.org/capnproto-c++-0.7.0.tar.gz
+- tar zxf capnproto-c++-0.7.0.tar.gz
+- cd capnproto-c++-0.7.0
+- ./configure
+- make -j6 check
+- sudo make install
+
+before_deploy:
+- zip -r cryptobank-${TRAVIS_TAG}-${TRAVIS_OS_NAME}.zip cryptobank
+
+deploy:
+  provider: releases
+  api_key:
+    secure: IJ4kqKNMSgLy8GQNd7rA5D4yGucE37BA++UdgECK2pcS+iXwvW4ICX0kWb3IW2Eo/ndE+KPVDdNoTA2dhA3LXRNIO9ewhWx8hmZ3Pohe3YJMOroS6uCM9S+X1nI26v7Al75H7aechsphCcztPI8pdKwBLeEw/COIpdvy685utYFg4/qw3lWUgQ8we8dbAuL5jRi0NlMMhZtcWBsV9RUNnlnqvxairgYK4LdbfJNLXavzoiNdD7/L31xiRdSkinhHm8BffUxsVVJv9bK6J8EECj15lt7JnHNV6SzoZC1ioSwHS/ikauGGsjRicQ2kCE+3UDDP4VqaM/Bf3OTYsPJ1sBai7igBl+KzYJJtwvDBDA744+1RNfDTWnXIcgULoILbGnFbNIZ9ZVTlbd1EPzP4bHsUdkhb5uDw1RnP7N8B0hAptMNOJnGgwp8Ct0zj2480eoDHHm1UKk1UdESDfQ0WLvyMtXMTT9wH4kHiollBXGIFvi39llGJoCCjDamPHf/uGckBj0yuKDxBt2n+yKTJadhHhv1GCrOWXP+K5uvVodmcCEVtwkuTAg/plNbR9NzY/YvXw6XzJ9rLOOCHWnEBl9LUOQTk5083ZBDOdtnr0dHgCCzswa9z7dYMgW5zp9IV4EKiJLJj3Erv1UMHgbWVhk/OGmVSxsZgI6AcJjkjLRs=
+  file: cryptobank-${TRAVIS_TAG}-${TRAVIS_OS_NAME}.zip
+  skip_cleanup: true
+  on:
+    tags: true
+    branch: master
+condition: ${TRAVIS_GO_VERSION} =~ ^1\.10

@@ -9,7 +9,7 @@ SERVER=-tags 'bankserver'
 CLIENT=-tags 'bankclient'
 LDFLAGS= -ldflags
 CAPNPPROTO=$(GOPATH)/src/zombiezen.com/go/capnproto2/std
-all: tools deps build install test test_release
+all: tools fmt deps capnp build
 
 ########################################
 ### Tools & dependencies
@@ -75,7 +75,7 @@ metalinter:
 
 
 
-.PHONY: capnp fmt build test
+.PHONY: tools fmt deps capnp build test
 .PHONY: capnp
 .PHONY: build
 .PHONY: tools deps

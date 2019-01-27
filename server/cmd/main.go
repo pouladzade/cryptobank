@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/cryptobank/config"
 	"github.com/cryptobank/cryptobank"
 	"github.com/cryptobank/server"
-	"github.com/cryptobank/config"
 	"net"
 	"os"
 	"zombiezen.com/go/capnproto2/rpc"
@@ -40,7 +40,7 @@ func serve(c net.Conn) {
 	conn := rpc.NewConn(rpc.StreamTransport(c), rpc.MainInterface(main.Client))
 	fmt.Println("Waiting for request....")
 	err := conn.Wait()
-	if err !=nil{
+	if err != nil {
 		fmt.Println(err)
 	}
 
