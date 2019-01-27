@@ -10,23 +10,6 @@
   version = "v0.3.1"
 
 [[projects]]
-  digest = "1:cd685a8b273acf671df4e26ec54c77c363d76eb80b554ed5374233a55f6e424f"
-  name = "github.com/jawher/mow.cli"
-  packages = [
-    ".",
-    "internal/container",
-    "internal/flow",
-    "internal/fsm",
-    "internal/lexer",
-    "internal/matcher",
-    "internal/parser",
-    "internal/values",
-  ]
-  pruneopts = "UT"
-  revision = "2f22195f169da29d54624afd9eb83ada5c9e4ee9"
-  version = "v1.0.4"
-
-[[projects]]
   digest = "1:37cf760bb4727abee5404d317c9dabb736b6de951c56db6ea048a4d485ff6682"
   name = "github.com/monax/bosmarmot"
   packages = ["monax/log"]
@@ -77,7 +60,6 @@
   analyzer-version = 1
   input-imports = [
     "github.com/BurntSushi/toml",
-    "github.com/jawher/mow.cli",
     "github.com/monax/bosmarmot/monax/log",
     "golang.org/x/net/context",
     "zombiezen.com/go/capnproto2",
