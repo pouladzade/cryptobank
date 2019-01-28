@@ -6,8 +6,12 @@ import (
 )
 
 func main() {
+
 	var cli client.Cli
 	cli.LoadFlags()
 	err := cli.Commit()
-	fmt.Println(err.Error())
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
 }

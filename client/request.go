@@ -30,7 +30,7 @@ func (r Request) CreateAccount(acc acm.Account) error {
 		return err
 	}
 	res, err := result.Res()
-	if err != nil {
+	if err == nil {
 		r.logResult(&res)
 	}
 
@@ -48,7 +48,7 @@ func (r Request) DeleteAccount(acc acm.Account) error {
 		return err
 	}
 	res, err := result.Res()
-	if err != nil {
+	if err == nil {
 		r.logResult(&res)
 	}
 	return err
@@ -68,7 +68,7 @@ func (r Request) TransferFunds(src, des acm.Account, amount uint64) error {
 		return err
 	}
 	res, err := result.Res()
-	if err != nil {
+	if err == nil {
 		r.logResult(&res)
 	}
 	return err
