@@ -16,12 +16,22 @@ const (
 
 type CryptoDb struct{ db map[string]acm.Account }
 
-func (cdb *CryptoDb) InsertAccount(acc acm.Account) {
+func (cdb *CryptoDb) InsertAccount(acc acm.Account) error {
+	temp := cdb.LoadAccount(acc.AccountIdString())
+	if temp.AccountIdString() == "" {
+		return fmt.Errorf("Account already exists in database!")
+	}
 	cdb.db[acc.AccountIdString()] = acc
+	return nil
 }
 
-func (cdb *CryptoDb) DeleteAccount(accid string) {
+func (cdb *CryptoDb) DeleteAccount(accid string) error {
+	acc := cdb.LoadAccount(accid)
+	if acc.AccountIdString() == "" {
+		return fmt.Errorf("Can not find the Account in database!")
+	}
 	delete(cdb.db, accid)
+	return nil
 }
 
 func (cdb *CryptoDb) UpdateAccount(acc acm.Account) {
