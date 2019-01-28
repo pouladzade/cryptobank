@@ -18,7 +18,7 @@ const (
 type Response struct{ capnp.Struct }
 
 // Response_TypeID is the unique identifier for the type Response.
-const Response_TypeID = 0x95b2035e5973395e
+const Response_TypeID = 0xe16a5fbf7cc9b4b2
 
 func NewResponse(s *capnp.Segment) (Response, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 1})
@@ -36,7 +36,7 @@ func ReadRootResponse(msg *capnp.Message) (Response, error) {
 }
 
 func (s Response) String() string {
-	str, _ := text.Marshal(0x95b2035e5973395e, s.Struct)
+	str, _ := text.Marshal(0xe16a5fbf7cc9b4b2, s.Struct)
 	return str
 }
 
@@ -81,7 +81,7 @@ func (s Response_List) At(i int) Response { return Response{s.List.Struct(i)} }
 func (s Response_List) Set(i int, v Response) error { return s.List.SetStruct(i, v.Struct) }
 
 func (s Response_List) String() string {
-	str, _ := text.MarshalList(0x95b2035e5973395e, s.List)
+	str, _ := text.MarshalList(0xe16a5fbf7cc9b4b2, s.List)
 	return str
 }
 
@@ -96,7 +96,7 @@ func (p Response_Promise) Struct() (Response, error) {
 type CoreBanking struct{ Client capnp.Client }
 
 // CoreBanking_TypeID is the unique identifier for the type CoreBanking.
-const CoreBanking_TypeID = 0xa5d76bfc3cc292e6
+const CoreBanking_TypeID = 0xa98297869266ae45
 
 func (c CoreBanking) CreateAccount(ctx context.Context, params func(CoreBanking_createAccount_Params) error, opts ...capnp.CallOption) CoreBanking_createAccount_Results_Promise {
 	if c.Client == nil {
@@ -105,7 +105,7 @@ func (c CoreBanking) CreateAccount(ctx context.Context, params func(CoreBanking_
 	call := &capnp.Call{
 		Ctx: ctx,
 		Method: capnp.Method{
-			InterfaceID:   0xa5d76bfc3cc292e6,
+			InterfaceID:   0xa98297869266ae45,
 			MethodID:      0,
 			InterfaceName: "cryptobank/cryptobank.capnp:CoreBanking",
 			MethodName:    "createAccount",
@@ -125,7 +125,7 @@ func (c CoreBanking) DeleteAccount(ctx context.Context, params func(CoreBanking_
 	call := &capnp.Call{
 		Ctx: ctx,
 		Method: capnp.Method{
-			InterfaceID:   0xa5d76bfc3cc292e6,
+			InterfaceID:   0xa98297869266ae45,
 			MethodID:      1,
 			InterfaceName: "cryptobank/cryptobank.capnp:CoreBanking",
 			MethodName:    "deleteAccount",
@@ -145,7 +145,7 @@ func (c CoreBanking) TransferFunds(ctx context.Context, params func(CoreBanking_
 	call := &capnp.Call{
 		Ctx: ctx,
 		Method: capnp.Method{
-			InterfaceID:   0xa5d76bfc3cc292e6,
+			InterfaceID:   0xa98297869266ae45,
 			MethodID:      2,
 			InterfaceName: "cryptobank/cryptobank.capnp:CoreBanking",
 			MethodName:    "transferFunds",
@@ -158,6 +158,26 @@ func (c CoreBanking) TransferFunds(ctx context.Context, params func(CoreBanking_
 	}
 	return CoreBanking_transferFunds_Results_Promise{Pipeline: capnp.NewPipeline(c.Client.Call(call))}
 }
+func (c CoreBanking) GetAccountInfo(ctx context.Context, params func(CoreBanking_getAccountInfo_Params) error, opts ...capnp.CallOption) CoreBanking_getAccountInfo_Results_Promise {
+	if c.Client == nil {
+		return CoreBanking_getAccountInfo_Results_Promise{Pipeline: capnp.NewPipeline(capnp.ErrorAnswer(capnp.ErrNullClient))}
+	}
+	call := &capnp.Call{
+		Ctx: ctx,
+		Method: capnp.Method{
+			InterfaceID:   0xa98297869266ae45,
+			MethodID:      3,
+			InterfaceName: "cryptobank/cryptobank.capnp:CoreBanking",
+			MethodName:    "getAccountInfo",
+		},
+		Options: capnp.NewCallOptions(opts),
+	}
+	if params != nil {
+		call.ParamsSize = capnp.ObjectSize{DataSize: 0, PointerCount: 1}
+		call.ParamsFunc = func(s capnp.Struct) error { return params(CoreBanking_getAccountInfo_Params{Struct: s}) }
+	}
+	return CoreBanking_getAccountInfo_Results_Promise{Pipeline: capnp.NewPipeline(c.Client.Call(call))}
+}
 
 type CoreBanking_Server interface {
 	CreateAccount(CoreBanking_createAccount) error
@@ -165,6 +185,8 @@ type CoreBanking_Server interface {
 	DeleteAccount(CoreBanking_deleteAccount) error
 
 	TransferFunds(CoreBanking_transferFunds) error
+
+	GetAccountInfo(CoreBanking_getAccountInfo) error
 }
 
 func CoreBanking_ServerToClient(s CoreBanking_Server) CoreBanking {
@@ -174,12 +196,12 @@ func CoreBanking_ServerToClient(s CoreBanking_Server) CoreBanking {
 
 func CoreBanking_Methods(methods []server.Method, s CoreBanking_Server) []server.Method {
 	if cap(methods) == 0 {
-		methods = make([]server.Method, 0, 3)
+		methods = make([]server.Method, 0, 4)
 	}
 
 	methods = append(methods, server.Method{
 		Method: capnp.Method{
-			InterfaceID:   0xa5d76bfc3cc292e6,
+			InterfaceID:   0xa98297869266ae45,
 			MethodID:      0,
 			InterfaceName: "cryptobank/cryptobank.capnp:CoreBanking",
 			MethodName:    "createAccount",
@@ -193,7 +215,7 @@ func CoreBanking_Methods(methods []server.Method, s CoreBanking_Server) []server
 
 	methods = append(methods, server.Method{
 		Method: capnp.Method{
-			InterfaceID:   0xa5d76bfc3cc292e6,
+			InterfaceID:   0xa98297869266ae45,
 			MethodID:      1,
 			InterfaceName: "cryptobank/cryptobank.capnp:CoreBanking",
 			MethodName:    "deleteAccount",
@@ -207,7 +229,7 @@ func CoreBanking_Methods(methods []server.Method, s CoreBanking_Server) []server
 
 	methods = append(methods, server.Method{
 		Method: capnp.Method{
-			InterfaceID:   0xa5d76bfc3cc292e6,
+			InterfaceID:   0xa98297869266ae45,
 			MethodID:      2,
 			InterfaceName: "cryptobank/cryptobank.capnp:CoreBanking",
 			MethodName:    "transferFunds",
@@ -217,6 +239,20 @@ func CoreBanking_Methods(methods []server.Method, s CoreBanking_Server) []server
 			return s.TransferFunds(call)
 		},
 		ResultsSize: capnp.ObjectSize{DataSize: 0, PointerCount: 1},
+	})
+
+	methods = append(methods, server.Method{
+		Method: capnp.Method{
+			InterfaceID:   0xa98297869266ae45,
+			MethodID:      3,
+			InterfaceName: "cryptobank/cryptobank.capnp:CoreBanking",
+			MethodName:    "getAccountInfo",
+		},
+		Impl: func(c context.Context, opts capnp.CallOptions, p, r capnp.Struct) error {
+			call := CoreBanking_getAccountInfo{c, opts, CoreBanking_getAccountInfo_Params{Struct: p}, CoreBanking_getAccountInfo_Results{Struct: r}}
+			return s.GetAccountInfo(call)
+		},
+		ResultsSize: capnp.ObjectSize{DataSize: 8, PointerCount: 2},
 	})
 
 	return methods
@@ -246,10 +282,18 @@ type CoreBanking_transferFunds struct {
 	Results CoreBanking_transferFunds_Results
 }
 
+// CoreBanking_getAccountInfo holds the arguments for a server call to CoreBanking.getAccountInfo.
+type CoreBanking_getAccountInfo struct {
+	Ctx     context.Context
+	Options capnp.CallOptions
+	Params  CoreBanking_getAccountInfo_Params
+	Results CoreBanking_getAccountInfo_Results
+}
+
 type CoreBanking_createAccount_Params struct{ capnp.Struct }
 
 // CoreBanking_createAccount_Params_TypeID is the unique identifier for the type CoreBanking_createAccount_Params.
-const CoreBanking_createAccount_Params_TypeID = 0x924b77e2e5987118
+const CoreBanking_createAccount_Params_TypeID = 0xf679d46bf8232843
 
 func NewCoreBanking_createAccount_Params(s *capnp.Segment) (CoreBanking_createAccount_Params, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2})
@@ -267,7 +311,7 @@ func ReadRootCoreBanking_createAccount_Params(msg *capnp.Message) (CoreBanking_c
 }
 
 func (s CoreBanking_createAccount_Params) String() string {
-	str, _ := text.Marshal(0x924b77e2e5987118, s.Struct)
+	str, _ := text.Marshal(0xf679d46bf8232843, s.Struct)
 	return str
 }
 
@@ -330,7 +374,7 @@ func (s CoreBanking_createAccount_Params_List) Set(i int, v CoreBanking_createAc
 }
 
 func (s CoreBanking_createAccount_Params_List) String() string {
-	str, _ := text.MarshalList(0x924b77e2e5987118, s.List)
+	str, _ := text.MarshalList(0xf679d46bf8232843, s.List)
 	return str
 }
 
@@ -345,7 +389,7 @@ func (p CoreBanking_createAccount_Params_Promise) Struct() (CoreBanking_createAc
 type CoreBanking_createAccount_Results struct{ capnp.Struct }
 
 // CoreBanking_createAccount_Results_TypeID is the unique identifier for the type CoreBanking_createAccount_Results.
-const CoreBanking_createAccount_Results_TypeID = 0x831f0a9921d15ba8
+const CoreBanking_createAccount_Results_TypeID = 0xbae40ac2ebeb62eb
 
 func NewCoreBanking_createAccount_Results(s *capnp.Segment) (CoreBanking_createAccount_Results, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
@@ -363,7 +407,7 @@ func ReadRootCoreBanking_createAccount_Results(msg *capnp.Message) (CoreBanking_
 }
 
 func (s CoreBanking_createAccount_Results) String() string {
-	str, _ := text.Marshal(0x831f0a9921d15ba8, s.Struct)
+	str, _ := text.Marshal(0xbae40ac2ebeb62eb, s.Struct)
 	return str
 }
 
@@ -410,7 +454,7 @@ func (s CoreBanking_createAccount_Results_List) Set(i int, v CoreBanking_createA
 }
 
 func (s CoreBanking_createAccount_Results_List) String() string {
-	str, _ := text.MarshalList(0x831f0a9921d15ba8, s.List)
+	str, _ := text.MarshalList(0xbae40ac2ebeb62eb, s.List)
 	return str
 }
 
@@ -429,7 +473,7 @@ func (p CoreBanking_createAccount_Results_Promise) Res() Response_Promise {
 type CoreBanking_deleteAccount_Params struct{ capnp.Struct }
 
 // CoreBanking_deleteAccount_Params_TypeID is the unique identifier for the type CoreBanking_deleteAccount_Params.
-const CoreBanking_deleteAccount_Params_TypeID = 0xf35eac24ee6ad79f
+const CoreBanking_deleteAccount_Params_TypeID = 0xf09ba84d3893ec83
 
 func NewCoreBanking_deleteAccount_Params(s *capnp.Segment) (CoreBanking_deleteAccount_Params, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
@@ -447,7 +491,7 @@ func ReadRootCoreBanking_deleteAccount_Params(msg *capnp.Message) (CoreBanking_d
 }
 
 func (s CoreBanking_deleteAccount_Params) String() string {
-	str, _ := text.Marshal(0xf35eac24ee6ad79f, s.Struct)
+	str, _ := text.Marshal(0xf09ba84d3893ec83, s.Struct)
 	return str
 }
 
@@ -483,7 +527,7 @@ func (s CoreBanking_deleteAccount_Params_List) Set(i int, v CoreBanking_deleteAc
 }
 
 func (s CoreBanking_deleteAccount_Params_List) String() string {
-	str, _ := text.MarshalList(0xf35eac24ee6ad79f, s.List)
+	str, _ := text.MarshalList(0xf09ba84d3893ec83, s.List)
 	return str
 }
 
@@ -498,7 +542,7 @@ func (p CoreBanking_deleteAccount_Params_Promise) Struct() (CoreBanking_deleteAc
 type CoreBanking_deleteAccount_Results struct{ capnp.Struct }
 
 // CoreBanking_deleteAccount_Results_TypeID is the unique identifier for the type CoreBanking_deleteAccount_Results.
-const CoreBanking_deleteAccount_Results_TypeID = 0x91b913bad4e662a3
+const CoreBanking_deleteAccount_Results_TypeID = 0xe7c119336e126854
 
 func NewCoreBanking_deleteAccount_Results(s *capnp.Segment) (CoreBanking_deleteAccount_Results, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
@@ -516,7 +560,7 @@ func ReadRootCoreBanking_deleteAccount_Results(msg *capnp.Message) (CoreBanking_
 }
 
 func (s CoreBanking_deleteAccount_Results) String() string {
-	str, _ := text.Marshal(0x91b913bad4e662a3, s.Struct)
+	str, _ := text.Marshal(0xe7c119336e126854, s.Struct)
 	return str
 }
 
@@ -563,7 +607,7 @@ func (s CoreBanking_deleteAccount_Results_List) Set(i int, v CoreBanking_deleteA
 }
 
 func (s CoreBanking_deleteAccount_Results_List) String() string {
-	str, _ := text.MarshalList(0x91b913bad4e662a3, s.List)
+	str, _ := text.MarshalList(0xe7c119336e126854, s.List)
 	return str
 }
 
@@ -582,7 +626,7 @@ func (p CoreBanking_deleteAccount_Results_Promise) Res() Response_Promise {
 type CoreBanking_transferFunds_Params struct{ capnp.Struct }
 
 // CoreBanking_transferFunds_Params_TypeID is the unique identifier for the type CoreBanking_transferFunds_Params.
-const CoreBanking_transferFunds_Params_TypeID = 0xe809bfa702e177ce
+const CoreBanking_transferFunds_Params_TypeID = 0xf2e0a5a1bd186b0c
 
 func NewCoreBanking_transferFunds_Params(s *capnp.Segment) (CoreBanking_transferFunds_Params, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2})
@@ -600,7 +644,7 @@ func ReadRootCoreBanking_transferFunds_Params(msg *capnp.Message) (CoreBanking_t
 }
 
 func (s CoreBanking_transferFunds_Params) String() string {
-	str, _ := text.Marshal(0xe809bfa702e177ce, s.Struct)
+	str, _ := text.Marshal(0xf2e0a5a1bd186b0c, s.Struct)
 	return str
 }
 
@@ -658,7 +702,7 @@ func (s CoreBanking_transferFunds_Params_List) Set(i int, v CoreBanking_transfer
 }
 
 func (s CoreBanking_transferFunds_Params_List) String() string {
-	str, _ := text.MarshalList(0xe809bfa702e177ce, s.List)
+	str, _ := text.MarshalList(0xf2e0a5a1bd186b0c, s.List)
 	return str
 }
 
@@ -673,7 +717,7 @@ func (p CoreBanking_transferFunds_Params_Promise) Struct() (CoreBanking_transfer
 type CoreBanking_transferFunds_Results struct{ capnp.Struct }
 
 // CoreBanking_transferFunds_Results_TypeID is the unique identifier for the type CoreBanking_transferFunds_Results.
-const CoreBanking_transferFunds_Results_TypeID = 0x86ab2a31316380b4
+const CoreBanking_transferFunds_Results_TypeID = 0x951f644a900fb6e8
 
 func NewCoreBanking_transferFunds_Results(s *capnp.Segment) (CoreBanking_transferFunds_Results, error) {
 	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
@@ -691,7 +735,7 @@ func ReadRootCoreBanking_transferFunds_Results(msg *capnp.Message) (CoreBanking_
 }
 
 func (s CoreBanking_transferFunds_Results) String() string {
-	str, _ := text.Marshal(0x86ab2a31316380b4, s.Struct)
+	str, _ := text.Marshal(0x951f644a900fb6e8, s.Struct)
 	return str
 }
 
@@ -738,7 +782,7 @@ func (s CoreBanking_transferFunds_Results_List) Set(i int, v CoreBanking_transfe
 }
 
 func (s CoreBanking_transferFunds_Results_List) String() string {
-	str, _ := text.MarshalList(0x86ab2a31316380b4, s.List)
+	str, _ := text.MarshalList(0x951f644a900fb6e8, s.List)
 	return str
 }
 
@@ -754,61 +798,249 @@ func (p CoreBanking_transferFunds_Results_Promise) Res() Response_Promise {
 	return Response_Promise{Pipeline: p.Pipeline.GetPipeline(0)}
 }
 
-const schema_85d3acc39d94e0f8 = "x\xda\xbcTMh\x13[\x18\xfd\xce\xbd\x93L\xf3H" +
-	"I\x87t\xd1E\x1fy}\xf4A[h_K\xfb\x16" +
-	"-O\x12\xe3\x0f\x96V\xc8m\xbb\xb0\x08\x85\xc9\xe4Z" +
-	"b\x9aI:\x93P\xea\xa6\x82\xb4\xe0\xc2\x85\xc5B]" +
-	"\x14\x17**\x16\x04q\xa3 \x82.D\x04\xc1\x1f\xe8" +
-	"J\xb0\x82E\x04\x05u\xe3B\x18\x99\xc4IR\x0cb" +
-	"\x15\xdc]\xee=|\xe7|\xdf9\xdf\xed\xbd\x8d\x18\xeb" +
-	"\xf3-(Db\xc0\xe7w.\x1f~\xdcv\xf6\x8f\xc8" +
-	"\x09\xd2:@\xe4\x83J\xd4\xff\x0f\xfb\x00Bx\x90E" +
-	"\x09\xce\x8d\xe3F__\xd7\xd5\xa5Z\xc0d\x19\x90-" +
-	"\x01\x1e\x8e\x8eL0\xeb\xc9\x12i\xad\x8a\xf3\xe9\xc5\x99" +
-	"\xb5{\xebO\x17\x89\xd0\x7f\x8a\xc5\x11^c*\xd1\xf8" +
-	"*\xe3\x18\xbf\xc0\x18\x88\x9c\xf3\xc9\xadg\xb7\xc27O" +
-	"\xd7\x16\\)\x17\xbcR*\xd82\xbb\xfa\xea\xe5\xdc\xc8" +
-	"2\x89\x0e\xb8\x08\xb7B\xff\x03\xf6\xc6E<g\xd7\x08" +
-	"\xce\xd4\xa0=9\xc5\xaf\xaf\x90h\x05\xaa\x9c\xe5Z\xf3" +
-	"\xbc\x0b\xe1\x93\\%\x0a/\xf29\x82\xb3\xb5|\xf7\xff" +
-	"\xcf\x99\x8d\x8b\xa4\xb5\xf2m\x027y\x1c\xe1\xf7%\xe4" +
-	"[~?<\xab\xa8D\xce\xa3\xb9Mv\xe9N\xe0\xf5" +
-	"6\xf6I\xa5\xc4\x9eU\\\xf6s\x1bG\xdf\xb5\xafO" +
-	"}\xacm \xe0+\x01\xfe\xf4E\xa9\xdb1\xac\xf9|" +
-	"!\x97\xd4\xfdf\xe6_\xeflfz\x0c=o\xe6\x87" +
-	"\xf6\xe4,\x19\xd7\xcdL\xda\x9c\xee1,\xa9\x17\xe4n" +
-	"\xc3\xc8\x15\xcdB\xfb\x98\x8c\xd8\xc5\x99\x82-\x14\xae\x10" +
-	") \xd2\x1a\xff&\x12\x0d\x1c\xa2\x99A\xb5\xa4\x8d\xa6" +
-	"j\xef\x044\x11~\x9c\xac`\xe9\xa6}DZ\xfb\x8b" +
-	"f\xca\xfeE2\xa5\x1e\x99^\xeec<}LR\x02" +
-	"\x80\x9f\x98\xcf\xff\xd7N$\xa6\xe4\x8c\xfcm\xf3\xd8>" +
-	"\xfc\x84\x1e\xb2\xf4\xac-\x82\x15\xae}cDb/\x87" +
-	"H0h@\xb3\x9b\x06\xed`\x17\x918\xc0!&\x18" +
-	"\xc0\x9a\xc1\x884\x11'\x12\xa3\x1c\xe2\x10\x83\xf3u\x08" +
-	"\xc3\x84\x14\x1a\x89\xa1\x91\x102\xf5\xacD\x90\x18\x82\x84" +
-	"\x85\xa4>\xa3\x9b\x86D\x80\x18\x025zy=\xbdc" +
-	"\xd2\xce\x87r\xa6-\x13\x80h\xa8H\xebtU\xb4s" +
-	"\x88^\x06OY\xb7\xab\xa2\x83C\x0c0\x84\x8c\\J" +
-	"B!\x06\x85\xb0\x90\x95\xb6\xadOW\x14|\xdf\xc4\x9a" +
-	"\x09\xb9&\x8a \xf7\x11UV\x12\xdew\xa1\x09\x8b\x98" +
-	"6\xac\xa2\xba\x0e\xf0\x16[\xdb\xe5\xbe\xfd\xa7\x82U\x96" +
-	"\x09\xde/\xa2u\xbaom\xaa\xe3M\x9f\"\xa5y\xc5" +
-	"\xe0x\xe6Wo\xbc\xc4R\xa4\x94\xd9\x18\x12\xf8\xe9\xbc" +
-	"\xd7\xf1w\x88H\xc48\xc4h\x8d\xbf\xc3\xc9:\xfe\x0e" +
-	"U\xfd\x8d\xda\xb9\xa2eH\xcfZ'%\xedB\xda\xd4" +
-	"\x0b\xa4\xa6s\xa6w\x1b\xd5\xb3n\x07\xdfX\xbc\xc3\xfc" +
-	"{\x92k\xe2\xefF2\xc8!Z\xea'\xedK\x00\x00" +
-	"\x00\xff\xffw\x08\xa2%"
+type CoreBanking_getAccountInfo_Params struct{ capnp.Struct }
+
+// CoreBanking_getAccountInfo_Params_TypeID is the unique identifier for the type CoreBanking_getAccountInfo_Params.
+const CoreBanking_getAccountInfo_Params_TypeID = 0xc515f3fd4c51c8cd
+
+func NewCoreBanking_getAccountInfo_Params(s *capnp.Segment) (CoreBanking_getAccountInfo_Params, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return CoreBanking_getAccountInfo_Params{st}, err
+}
+
+func NewRootCoreBanking_getAccountInfo_Params(s *capnp.Segment) (CoreBanking_getAccountInfo_Params, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1})
+	return CoreBanking_getAccountInfo_Params{st}, err
+}
+
+func ReadRootCoreBanking_getAccountInfo_Params(msg *capnp.Message) (CoreBanking_getAccountInfo_Params, error) {
+	root, err := msg.RootPtr()
+	return CoreBanking_getAccountInfo_Params{root.Struct()}, err
+}
+
+func (s CoreBanking_getAccountInfo_Params) String() string {
+	str, _ := text.Marshal(0xc515f3fd4c51c8cd, s.Struct)
+	return str
+}
+
+func (s CoreBanking_getAccountInfo_Params) AccountId() ([]byte, error) {
+	p, err := s.Struct.Ptr(0)
+	return []byte(p.Data()), err
+}
+
+func (s CoreBanking_getAccountInfo_Params) HasAccountId() bool {
+	p, err := s.Struct.Ptr(0)
+	return p.IsValid() || err != nil
+}
+
+func (s CoreBanking_getAccountInfo_Params) SetAccountId(v []byte) error {
+	return s.Struct.SetData(0, v)
+}
+
+// CoreBanking_getAccountInfo_Params_List is a list of CoreBanking_getAccountInfo_Params.
+type CoreBanking_getAccountInfo_Params_List struct{ capnp.List }
+
+// NewCoreBanking_getAccountInfo_Params creates a new list of CoreBanking_getAccountInfo_Params.
+func NewCoreBanking_getAccountInfo_Params_List(s *capnp.Segment, sz int32) (CoreBanking_getAccountInfo_Params_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 0, PointerCount: 1}, sz)
+	return CoreBanking_getAccountInfo_Params_List{l}, err
+}
+
+func (s CoreBanking_getAccountInfo_Params_List) At(i int) CoreBanking_getAccountInfo_Params {
+	return CoreBanking_getAccountInfo_Params{s.List.Struct(i)}
+}
+
+func (s CoreBanking_getAccountInfo_Params_List) Set(i int, v CoreBanking_getAccountInfo_Params) error {
+	return s.List.SetStruct(i, v.Struct)
+}
+
+func (s CoreBanking_getAccountInfo_Params_List) String() string {
+	str, _ := text.MarshalList(0xc515f3fd4c51c8cd, s.List)
+	return str
+}
+
+// CoreBanking_getAccountInfo_Params_Promise is a wrapper for a CoreBanking_getAccountInfo_Params promised by a client call.
+type CoreBanking_getAccountInfo_Params_Promise struct{ *capnp.Pipeline }
+
+func (p CoreBanking_getAccountInfo_Params_Promise) Struct() (CoreBanking_getAccountInfo_Params, error) {
+	s, err := p.Pipeline.Struct()
+	return CoreBanking_getAccountInfo_Params{s}, err
+}
+
+type CoreBanking_getAccountInfo_Results struct{ capnp.Struct }
+
+// CoreBanking_getAccountInfo_Results_TypeID is the unique identifier for the type CoreBanking_getAccountInfo_Results.
+const CoreBanking_getAccountInfo_Results_TypeID = 0xfc9887d1ffcbeba7
+
+func NewCoreBanking_getAccountInfo_Results(s *capnp.Segment) (CoreBanking_getAccountInfo_Results, error) {
+	st, err := capnp.NewStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2})
+	return CoreBanking_getAccountInfo_Results{st}, err
+}
+
+func NewRootCoreBanking_getAccountInfo_Results(s *capnp.Segment) (CoreBanking_getAccountInfo_Results, error) {
+	st, err := capnp.NewRootStruct(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2})
+	return CoreBanking_getAccountInfo_Results{st}, err
+}
+
+func ReadRootCoreBanking_getAccountInfo_Results(msg *capnp.Message) (CoreBanking_getAccountInfo_Results, error) {
+	root, err := msg.RootPtr()
+	return CoreBanking_getAccountInfo_Results{root.Struct()}, err
+}
+
+func (s CoreBanking_getAccountInfo_Results) String() string {
+	str, _ := text.Marshal(0xfc9887d1ffcbeba7, s.Struct)
+	return str
+}
+
+func (s CoreBanking_getAccountInfo_Results) Name() (string, error) {
+	p, err := s.Struct.Ptr(0)
+	return p.Text(), err
+}
+
+func (s CoreBanking_getAccountInfo_Results) HasName() bool {
+	p, err := s.Struct.Ptr(0)
+	return p.IsValid() || err != nil
+}
+
+func (s CoreBanking_getAccountInfo_Results) NameBytes() ([]byte, error) {
+	p, err := s.Struct.Ptr(0)
+	return p.TextBytes(), err
+}
+
+func (s CoreBanking_getAccountInfo_Results) SetName(v string) error {
+	return s.Struct.SetText(0, v)
+}
+
+func (s CoreBanking_getAccountInfo_Results) Balance() uint64 {
+	return s.Struct.Uint64(0)
+}
+
+func (s CoreBanking_getAccountInfo_Results) SetBalance(v uint64) {
+	s.Struct.SetUint64(0, v)
+}
+
+func (s CoreBanking_getAccountInfo_Results) Res() (Response, error) {
+	p, err := s.Struct.Ptr(1)
+	return Response{Struct: p.Struct()}, err
+}
+
+func (s CoreBanking_getAccountInfo_Results) HasRes() bool {
+	p, err := s.Struct.Ptr(1)
+	return p.IsValid() || err != nil
+}
+
+func (s CoreBanking_getAccountInfo_Results) SetRes(v Response) error {
+	return s.Struct.SetPtr(1, v.Struct.ToPtr())
+}
+
+// NewRes sets the res field to a newly
+// allocated Response struct, preferring placement in s's segment.
+func (s CoreBanking_getAccountInfo_Results) NewRes() (Response, error) {
+	ss, err := NewResponse(s.Struct.Segment())
+	if err != nil {
+		return Response{}, err
+	}
+	err = s.Struct.SetPtr(1, ss.Struct.ToPtr())
+	return ss, err
+}
+
+// CoreBanking_getAccountInfo_Results_List is a list of CoreBanking_getAccountInfo_Results.
+type CoreBanking_getAccountInfo_Results_List struct{ capnp.List }
+
+// NewCoreBanking_getAccountInfo_Results creates a new list of CoreBanking_getAccountInfo_Results.
+func NewCoreBanking_getAccountInfo_Results_List(s *capnp.Segment, sz int32) (CoreBanking_getAccountInfo_Results_List, error) {
+	l, err := capnp.NewCompositeList(s, capnp.ObjectSize{DataSize: 8, PointerCount: 2}, sz)
+	return CoreBanking_getAccountInfo_Results_List{l}, err
+}
+
+func (s CoreBanking_getAccountInfo_Results_List) At(i int) CoreBanking_getAccountInfo_Results {
+	return CoreBanking_getAccountInfo_Results{s.List.Struct(i)}
+}
+
+func (s CoreBanking_getAccountInfo_Results_List) Set(i int, v CoreBanking_getAccountInfo_Results) error {
+	return s.List.SetStruct(i, v.Struct)
+}
+
+func (s CoreBanking_getAccountInfo_Results_List) String() string {
+	str, _ := text.MarshalList(0xfc9887d1ffcbeba7, s.List)
+	return str
+}
+
+// CoreBanking_getAccountInfo_Results_Promise is a wrapper for a CoreBanking_getAccountInfo_Results promised by a client call.
+type CoreBanking_getAccountInfo_Results_Promise struct{ *capnp.Pipeline }
+
+func (p CoreBanking_getAccountInfo_Results_Promise) Struct() (CoreBanking_getAccountInfo_Results, error) {
+	s, err := p.Pipeline.Struct()
+	return CoreBanking_getAccountInfo_Results{s}, err
+}
+
+func (p CoreBanking_getAccountInfo_Results_Promise) Res() Response_Promise {
+	return Response_Promise{Pipeline: p.Pipeline.GetPipeline(1)}
+}
+
+const schema_aaa3acc39d94e0f8 = "x\xda\xb4\x93_h\x1cU\x18\xc5\xbfs\xef\xccN+" +
+	"\x1b6\xe3F\xa8\x10X\xa9y\x88\x81\xb4\x0dQ\x90\"" +
+	"\xecfk\xc4H\x02{\x93\x16|P\xe4f\xf6&\xae" +
+	"\x9b\xbd\x13gf\x91\x14\xa5\xa0\xa0\xf8 X\xad\xa8H" +
+	"A\x91\xe2\x1f\x8a\xa5R|\x10\x8bT\x11,\xe2\x83\xa0" +
+	"\xa0o\x15\x04\xc5\xf5A*H\x11\xcb\xc8\xddufg" +
+	"eQ\xb7\xe8\xdb2\xf7\xec9\xe7\xfb\xdd\xef\x1e\x98e" +
+	"\x156g\xef\xb7\x89\xc4\x1dv.\xfe\xe1\xbd\xc2\xb3\xf7" +
+	"\xd4K/\x90;\x0d\"\x1b\x0e\xd1\xfcc\xec2\x08\xc5" +
+	"\xe3\xacL\x88\x17\xdf\xd9x\xee\xc9\x17\x1f\x7f\x8b\xdcI" +
+	"\x1e_\xb9t\xe2\xe4\xc7\xa7_\x7f\x9b\x08\xf3gY\x15" +
+	"\xc5\x0b\xcc\xfc\xe1<sPlq\x87(\xee\xacw:" +
+	"\x1f]\xf7\xdd\xfbY\xbf#\xbc\xeb\xd7\xe0\xc6\xef\x99\xfc" +
+	"}\xa7\xbf\x9e;\xf7\x01\xb9\x93\xd6\x80\xdf\xd3\xbc\x8a\xe2" +
+	"\xcb\xc6d\xed\x04\xe7X{\x953\x10\xc5\x9f\x7f*\x96" +
+	"\xaf\xfer\xc3'Y\xc3\xe3=\xc3S]\xc3w\xcf]" +
+	"|\xf4\xc3\x07\x1e\xfa\x96\xc4$\xd0w\xec)/\xf2\x19" +
+	"\x14\xbf1\xa6\xc5\xaf\xf8#\x84\xf8\xf0\x83\xd7\xeb\xf9\x1b" +
+	"/|\x9f\xb5\x9b\xb3\xbav\x8b\x96\xb1{\xe2\xa7\xe7o" +
+	"_y\xf3\x95\x9f\xb3\x02e\xfdh\x04;]A\xbe\xb9" +
+	"\xe7\xfck\xa7.]&1\x0d\xa3\xe8\x128\xd9S\x9c" +
+	"\xb5\xce\x10\xe2C\xd37_i~\xb9\xf3\xeb\x80b\xc5" +
+	"\xee*\xa4m\x14ot>\x8b\xbfx\xea\xa5\xdf\x07\x14" +
+	"W\xed\xdf\x8c\xc2\xcd\x9d\xa1\xd9\xd8\x0bv\xb6#\x7f]" +
+	"\xe6ts\x7f\xf2[7\xf7yr[o\x1f<\xe4\x07" +
+	"\xaa*u\xb3\xa17\xf7E\x81\xd4\xe1\x86\x0a\xeej\xeb" +
+	"z8\xb5\xaaJa{+\x0a\x85\xc5-\"\x0bD\xee" +
+	"\xd8^\"\xb1\x8bCL08\x81\x0a1\xdeGF\xc0" +
+	"8!\x0d\xb3\xfe!\x8cj\x80\x18\xe76Q:#\x92" +
+	"\x0bw\x1f\x0e\x88\xb9\x0d\x07}\x84H`\xbb\xf7\x9b\xb3" +
+	"#\x0eXJ\x0f\xc9\xe2\xb9K\xe6l\xc1\x01O\xaf\x1a" +
+	"\x09\x1e\xf7\xb6\xa3\xc4\xdcY'\xf6\x02%#\xb5\xe0Q" +
+	"\xc9\xf3\xdb:\xaa \xae\xab-5\xf8%\x01A\xa5." +
+	"\x8a\x0a\xe2M\x15-x\x9e\xdf\xa6\xb2\x8e\x96\xf4\x86_" +
+	"A\x0d\xf8\xf7d\x93\xd0n\xc0\xffAV\xf6\xac\xd7\x1a" +
+	"G\x95!\x8b\x1c1;w\x13\x8dP1\x99\xb07\xdf" +
+	"T\xad$\x03\xd9\x1a\xa8\xb8J$\xf2\x1cb\x0fC\xfc" +
+	"g\xde\x12\xa1\x8e1b\x18\xcbD\xf1aQ\xab*\xdc" +
+	".\xf8:T\xe6\xdew\xa5\xa6\xb7\xcc\x10\x89)\x0eq" +
+	"\x80\x01\x980\x1b\xec\xceV\x89\xc44\x87\xb8\x95\xa1\xe0" +
+	"\xf9u\x05\x8b\x18,\xc2\xb1\x96\x0aC\xb9\xa9\x90'\x86" +
+	"\xfc(\xc3%W\xfc_\xf0\x1f1\xac&\x0b\xd7\x0ar" +
+	"\xc4\x07\x9b$\xe5\xd3\xa4\xc5\x83D\xa2\xc2!\x96\x19\xdc" +
+	"\x04\xef\xd2:\x91\xb8\x9bC\x1cf\x00\x9b\x00#r\x85" +
+	"\x11.s\x88{\x19\xca\xa1\xdf\x0e<\x95\xb6\xa9\xab0" +
+	"jh\x19\x91\xd3\xf0u\xf2\xb5,[\xa66v\x13\xc3" +
+	"n\xba\xe6\x970\xa4\xb2\x81s'\x87\xa8e*\xaf\xcc" +
+	"\x0c\xa9\\\xedW\x1eF\xb1\xa0e+\xdd\x94c\xebr" +
+	"KjO\x8d\xde\xf7/\xcfb\xb5\xacz\xab\x93i<" +
+	"\xd3\x87\x9c2\xaef\xa6`\xe85^\xd9\xdb\x9f\xe2o" +
+	"\xdb\x0d_\xc0?\x02\x00\x00\xff\xffb\xcd\x1eW"
 
 func init() {
-	schemas.Register(schema_85d3acc39d94e0f8,
-		0x831f0a9921d15ba8,
-		0x86ab2a31316380b4,
-		0x86d27202544b4ccb,
-		0x91b913bad4e662a3,
-		0x924b77e2e5987118,
-		0x95b2035e5973395e,
-		0xa5d76bfc3cc292e6,
-		0xe809bfa702e177ce,
-		0xf35eac24ee6ad79f)
+	schemas.Register(schema_aaa3acc39d94e0f8,
+		0x951f644a900fb6e8,
+		0xa98297869266ae45,
+		0xbae40ac2ebeb62eb,
+		0xbcb431d8ac5c0c8d,
+		0xc515f3fd4c51c8cd,
+		0xe16a5fbf7cc9b4b2,
+		0xe7c119336e126854,
+		0xf09ba84d3893ec83,
+		0xf2e0a5a1bd186b0c,
+		0xf679d46bf8232843,
+		0xfc9887d1ffcbeba7)
 }

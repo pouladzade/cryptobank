@@ -1,5 +1,5 @@
 using Go = import "/go.capnp";
-@0x85d3acc39d94e0f8;
+@0xaaa3acc39d94e0f8;
 $Go.package("cryptobank");
 $Go.import("cryptobank");
 
@@ -15,5 +15,6 @@ interface CoreBanking {
   createAccount @0 (accountId :Data, name :Text, balance : UInt64) -> (res:Response);
   deleteAccount @1 (accountId : Data) -> (res :Response);
   transferFunds @2 (source : Data, destination : Data, amount : UInt64) -> (res :Response);
+  getAccountInfo@3 (accountId :Data) -> (name :Text, balance : UInt64,res :Response);
 }
 

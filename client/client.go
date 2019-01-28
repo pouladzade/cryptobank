@@ -69,6 +69,8 @@ func (cl *Cli) Commit() error {
 		return cl.deleteAccount()
 	case "TransferFunds":
 		return cl.transferFunds()
+	case "GetAccountInfo":
+		return cl.getAccountInfo()
 	}
 	switch *cl.cmd {
 	case "crt":
@@ -77,6 +79,8 @@ func (cl *Cli) Commit() error {
 		return cl.deleteAccount()
 	case "trf":
 		return cl.transferFunds()
+	case "acinf":
+		return cl.getAccountInfo()
 	}
 	return fmt.Errorf("Error : Please specifiy a function name using -cmd flag")
 }
@@ -98,6 +102,20 @@ func (cl *Cli) createAccount() error {
 	acc.Balance = bal
 	acc.SetAccountIdString(*cl.accId)
 	err = req.CreateAccount(acc)
+	return err
+}
+
+func (cl *Cli) getAccountInfo() error {
+	conf := config.LoadCreateConfig()
+	req := NewRequest(conf)
+
+	if req == nil {
+		return (fmt.Errorf("Unable to create the request!"))
+	}
+	defer req.Close()
+	var acc acm.Account
+	acc.SetAccountIdString(*cl.accId)
+	err := req.GetAccountInfo(acc)
 	return err
 }
 

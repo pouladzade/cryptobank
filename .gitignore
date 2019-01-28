@@ -1,7 +1,7 @@
 # build target
 
-client/build/bankclient
-server/build/bankserver
+client/build/
+server/build/
 
 # tests
 test_scratch/
