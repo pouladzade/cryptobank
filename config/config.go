@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/BurntSushi/toml"
+	"github.com/monax/bosmarmot/monax/log"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -97,7 +98,7 @@ func LoadCreateConfig() *Config {
 
 	// if there is no config file, Load the default config and create the default config file
 	if err != nil {
-		fmt.Println(err)
+		log.Warn(err.Error())
 		conf = DefaultConfig()
 		conf.SaveToFile(Config_File)
 	}

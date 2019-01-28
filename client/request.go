@@ -16,7 +16,7 @@ type Request struct {
 }
 
 func (r Request) CreateAccount(acc acm.Account) error {
-	fmt.Printf("Calling CreateAccount:\n AccountId = %s , Name = %s , Balance = %d\n\n",
+	fmt.Printf("Calling CreateAccount:\n AccountId = %s , name = %s , balance = %d\n\n",
 		acc.AccountIdString(), acc.Name, acc.Balance)
 	result, err := r.cb.CreateAccount(r.ctx, func(p crb.CoreBanking_createAccount_Params) error {
 		p.SetBalance(acc.Balance)
@@ -26,11 +26,14 @@ func (r Request) CreateAccount(acc acm.Account) error {
 		return fmt.Errorf("Error : can not set parameters!")
 	}).Struct()
 	if err != nil {
-		log.Warn("Error in CreateAccount : %v", err)
+		log.Warn("Error in CreateAccount : %s", err.Error())
 		return err
 	}
 	res, err := result.Res()
-	r.logResult(res)
+	if err != nil {
+		r.logResult(&res)
+	}
+
 	return err
 }
 
@@ -41,11 +44,13 @@ func (r Request) DeleteAccount(acc acm.Account) error {
 		return err
 	}).Struct()
 	if err != nil {
-		log.Warn("Error in DeleteAccount : %v", err)
+		log.Warn("Error in DeleteAccount : %s", err.Error())
 		return err
 	}
 	res, err := result.Res()
-	r.logResult(res)
+	if err != nil {
+		r.logResult(&res)
+	}
 	return err
 }
 
@@ -59,15 +64,17 @@ func (r Request) TransferFunds(src, des acm.Account, amount uint64) error {
 		return fmt.Errorf("Error : can not set parameters!")
 	}).Struct()
 	if err != nil {
-		log.Warn("Error in TransferFunds : %v", err)
+		log.Warn("Error in TransferFunds : %s", err.Error())
 		return err
 	}
 	res, err := result.Res()
-	r.logResult(res)
+	if err != nil {
+		r.logResult(&res)
+	}
 	return err
 }
 
-func (r Request) logResult(res crb.Response) {
+func (r Request) logResult(res *crb.Response) {
 	message, _ := res.Message()
 	fmt.Printf("Response : Code = %d , Message = %s\n", res.Code(), message)
 }

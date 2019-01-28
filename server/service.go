@@ -31,7 +31,7 @@ func (c *Service) CreateAccount(call crb.CoreBanking_createAccount) error {
 	}
 	acc.SetAccountId(acid)
 	c.db.InsertAccount(acc)
-	res.SetMessage("Succesfull")
+	res.SetMessage("Account succesfully created!")
 	res.SetCode(0)
 	c.db.Commit()
 	return call.Results.SetRes(res)
@@ -47,8 +47,13 @@ func (c *Service) DeleteAccount(call crb.CoreBanking_deleteAccount) error {
 		return call.Results.SetRes(res)
 	}
 	acc.SetAccountId(acid)
-	c.db.DeleteAccount(acc.AccountIdString())
-	res.SetMessage("Succesfull")
+	err = c.db.DeleteAccount(acc.AccountIdString())
+	if err != nil {
+		res.SetMessage(err.Error())
+		res.SetCode(-3)
+		return call.Results.SetRes(res)
+	}
+	res.SetMessage("Account succesfully deleted!")
 	res.SetCode(0)
 	c.db.Commit()
 	return call.Results.SetRes(res)
@@ -60,19 +65,29 @@ func (c *Service) TransferFunds(call crb.CoreBanking_transferFunds) error {
 	srcAdd, err := call.Params.Source()
 	if err != nil {
 		res.SetMessage(err.Error())
-		res.SetCode(-3)
+		res.SetCode(-4)
 		return call.Results.SetRes(res)
 	}
 	src.SetAccountId(srcAdd)
 	desAdd, err := call.Params.Destination()
 	if err != nil {
 		res.SetMessage(err.Error())
-		res.SetCode(-4)
+		res.SetCode(-5)
 		return call.Results.SetRes(res)
 	}
 	des.SetAccountId(desAdd)
 	src = c.db.LoadAccount(src.AccountIdString())
 	des = c.db.LoadAccount(des.AccountIdString())
+	if src.AccountIdString() == "" {
+		res.SetMessage("Can not find the source account!")
+		res.SetCode(-6)
+		return call.Results.SetRes(res)
+	}
+	if des.AccountIdString() == "" {
+		res.SetMessage("Can not find the destination account!")
+		res.SetCode(-7)
+		return call.Results.SetRes(res)
+	}
 	mess, code := c.settle(src, des, call.Params.Amount())
 	res.SetMessage(mess)
 	res.SetCode(code)
@@ -91,7 +106,7 @@ func (c *Service) createResponse(seg *capnp.Segment, code int32, message string)
 
 func (c *Service) settle(src, des acm.Account, amount uint64) (string, int32) {
 	if des.Balance < amount {
-		return "Insuficient balance", -5
+		return "Insuficient balance", -8
 	}
 	src.Balance += amount
 	des.Balance -= amount
@@ -99,5 +114,5 @@ func (c *Service) settle(src, des acm.Account, amount uint64) (string, int32) {
 	c.db.UpdateAccount(des)
 	c.db.Commit()
 
-	return "Successfull", 0
+	return "Amount Successfully transffered", 0
 }

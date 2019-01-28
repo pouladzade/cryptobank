@@ -16,7 +16,7 @@ func main() {
 	conf := config.LoadCreateConfig()
 	l, err := net.Listen(conf.RPC.Type, conf.RPC.Host+":"+conf.RPC.Port)
 	if err != nil {
-		fmt.Println("Error listening:", err.Error())
+		fmt.Printf("Error listening: [%s] \n\n", err.Error())
 		os.Exit(1)
 	}
 	defer l.Close()
@@ -29,7 +29,7 @@ func main() {
 	for {
 		conn, err := l.Accept()
 		if err != nil {
-			fmt.Println("Error accepting: ", err.Error())
+			fmt.Printf("Error accepting:[%s] \n\n", err.Error())
 			os.Exit(1)
 		}
 		go serve(conn, &service)
@@ -40,9 +40,9 @@ func main() {
 func serve(c net.Conn, service *server.Service) {
 	main := cryptobank.CoreBanking_ServerToClient(service)
 	conn := rpc.NewConn(rpc.StreamTransport(c), rpc.MainInterface(main.Client))
-	fmt.Println("Waiting for request....")
+	fmt.Println("Server recieved a request :")
 	err := conn.Wait()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(err.Error())
 	}
 }

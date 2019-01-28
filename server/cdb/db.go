@@ -20,8 +20,13 @@ func (cdb *CryptoDb) InsertAccount(acc acm.Account) {
 	cdb.db[acc.AccountIdString()] = acc
 }
 
-func (cdb *CryptoDb) DeleteAccount(accid string) {
+func (cdb *CryptoDb) DeleteAccount(accid string) error {
+	acc := cdb.LoadAccount(accid)
+	if acc.AccountIdString() == "" {
+		return fmt.Errorf("Can not find the Account in database!")
+	}
 	delete(cdb.db, accid)
+	return nil
 }
 
 func (cdb *CryptoDb) UpdateAccount(acc acm.Account) {
