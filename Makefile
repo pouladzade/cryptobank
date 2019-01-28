@@ -3,6 +3,7 @@ GOTOOLS = \
 	github.com/golang/dep/cmd/dep \
 	gopkg.in/alecthomas/gometalinter.v2 \
 	zombiezen.com/go/capnproto2/... \
+	github.com/syndtr/goleveldb/leveldb
 
 PACKAGES=$(shell go list ./... | grep -v '/vendor/')
 SERVER=-tags 'bankserver'

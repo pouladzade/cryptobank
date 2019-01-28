@@ -68,6 +68,26 @@ func (r Request) TransferFunds(src, des acm.Account, amount uint64) error {
 	return err
 }
 
+func (r Request) GetAccountInfo(acc acm.Account) error {
+	log.Printf("Calling GetAccountInfo:\n AccountId = %s\n\n",
+		acc.AccountIdString())
+	result, err := r.cb.GetAccountInfo(r.ctx, func(p crb.CoreBanking_getAccountInfo_Params) error {
+		if p.SetAccountId(acc.AccountId()) == nil {
+			return nil
+		}
+		return fmt.Errorf("Error : can not set parameters!")
+	}).Struct()
+	if err != nil {
+		log.Printf("Error in CreateAccount : %v", err)
+		return err
+	}
+	res, err := result.Res()
+	name, err := result.Name()
+	log.Printf("Response :{%v} \n\tName = %s\n\tBalance = %d ", res, name, result.Balance())
+
+	return err
+}
+
 func (r Request) Close() {
 	r.conn.Close()
 }
