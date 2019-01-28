@@ -47,13 +47,13 @@ type Cli struct {
 
 func (cl *Cli) LoadFlags() {
 
-	cl.cmd = flag.String("cmd", "", "a string as a function name")
-	cl.balance = flag.String("bal", "", "a string as a balance")
-	cl.name = flag.String("name", "", "a string as an account holder name")
-	cl.accId = flag.String("accid", "", "a string as a 32 bytes in hex-string format as AccountId")
-	cl.src = flag.String("src", "", "a string as a 32 bytes in hex-string format as AccountId of source")
-	cl.des = flag.String("des", "", "a string as a 32 bytes in hex-string format as AccountId of source")
-	cl.amount = flag.String("amount", "", "a string as an amount")
+	cl.cmd = flag.String("cmd", "", "function name(command) which you wanna send to server :\n\t[CreateAccount|crt]\n\t[DeleteAccount|del]\n\t[TransferFunds|trf]")
+	cl.balance = flag.String("bal", "", "balance for creating new account")
+	cl.name = flag.String("name", "", "account holder name for creating new account")
+	cl.accId = flag.String("accid", "", "a 32 bytes in hex-string format as AccountId for deleting or creating new account")
+	cl.src = flag.String("src", "", "a 32 bytes in hex-string format as AccountId of source account in transfer found")
+	cl.des = flag.String("des", "", "a 32 bytes in hex-string format as AccountId of destination account in transfer found")
+	cl.amount = flag.String("amount", "", "an amount which will be use in transfer found")
 
 	flag.Parse()
 }
@@ -71,11 +71,11 @@ func (cl *Cli) Commit() error {
 		return cl.transferFunds()
 	}
 	switch *cl.cmd {
-	case "crtac":
+	case "crt":
 		return cl.createAccount()
-	case "delac":
+	case "del":
 		return cl.deleteAccount()
-	case "trfd":
+	case "trf":
 		return cl.transferFunds()
 	}
 	return fmt.Errorf("Error : Please specifiy a function name using -cmd flag")
