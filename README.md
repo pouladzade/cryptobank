@@ -228,3 +228,5 @@ params[accountId = [147 135 2 74 212 229 192 100 95 202 41 38 105 136 154 172 23
 
 
 ```
+
+### You can look at here https://github.com/pouladzade/capnpVSgrpc for a small comparision between go-capnproto2 and go grpc 
